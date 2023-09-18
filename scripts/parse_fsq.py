@@ -47,8 +47,9 @@ for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
     df.rename(columns={c:d},inplace=True)
 print(df)
-fields['FSQ_ID'] = "INT AUTO_INCREMENT PRIMARY KEY"
-df["FSQ_ID"] = None
+fields['FSQ_ID'] = Integer()
+df["FSQ_ID"] = range(len(df))
+df.set_index("FSQ_ID", inplace=True)
 fields['survey_iteration'] = Integer()
 df["survey_iteration"] = None
 
