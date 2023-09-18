@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, String, Integer, DateTime
 from db_auth import *
 
 # Define the path to your CSV file
@@ -11,33 +11,33 @@ df = pd.read_csv(csv_file_path, header=0)
 engine = create_engine(f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 
 fields = { 
-          'timestamp': "TIMESTAMP", 
-          'User_ID': "VARCHAR(64)",
-          'q1_bbd': "VARCHAR(40)", 
-          'q2_grocery': "VARCHAR(40)", 
-          'q3_buyvarveg': "VARCHAR(40)", 
-          'q4_confbudggroc': "INT",
-          'q5_confmealplan': "INT", 
-          'q6_confselectveg': "INT", 
-          'q7_confreadlabel': "INT", 
-          'q8_planmealathome': "INT", 
-          'q9_confadjustrecipe': "INT", 
-          'q10_timesownbrekkie': "VARCHAR(40)", 
-          'q11_timesownlunch': "VARCHAR(40)", 
-          'q12_timesowndinner': "VARCHAR(40)", 
-          'q13_oftenmealsbalanced': "VARCHAR(40)", 
-          'q14_abilitytoprepare': "VARCHAR(160)", 
-          'q15_confknives': "INT", 
-          'q16_confpeel': "INT", 
-          'q17_confvegprep': "INT", 
-          'q18_conflegume': "INT", 
-          'q19_confprepbasic': "INT", 
-          'q20_confrecipe': "INT", 
-          'q21_confboil': "INT", 
-          'q22_conffry': "INT",       
-          'q23_confbake': "INT", 
-          'q24_confspice': "INT", 
-          'q25_confnew': "INT"
+          'timestamp': DateTime(), 
+          'User_ID': String(64),
+          'q1_bbd': String(40), 
+          'q2_grocery': String(40), 
+          'q3_buyvarveg': String(40), 
+          'q4_confbudggroc': Integer(),
+          'q5_confmealplan': Integer(), 
+          'q6_confselectveg': Integer(), 
+          'q7_confreadlabel': Integer(), 
+          'q8_planmealathome': Integer(), 
+          'q9_confadjustrecipe': Integer(), 
+          'q10_timesownbrekkie': String(40), 
+          'q11_timesownlunch': String(40), 
+          'q12_timesowndinner': String(40), 
+          'q13_oftenmealsbalanced': String(40), 
+          'q14_abilitytoprepare': String(160), 
+          'q15_confknives': Integer(), 
+          'q16_confpeel': Integer(), 
+          'q17_confvegprep': Integer(), 
+          'q18_conflegume': Integer(), 
+          'q19_confprepbasic': Integer(), 
+          'q20_confrecipe': Integer(), 
+          'q21_confboil': Integer(), 
+          'q22_conffry': Integer(),       
+          'q23_confbake': Integer(), 
+          'q24_confspice': Integer(), 
+          'q25_confnew': Integer()
           }
 
 # Replace 'your_table_name' with the name of your database table
@@ -49,7 +49,7 @@ for c,d in zip(df.columns.tolist(),fields.keys()):
 print(df)
 fields['FSQ_ID'] = "INT AUTO_INCREMENT PRIMARY KEY"
 df["FSQ_ID"] = None
-fields['survey_iteration'] = "INT"
+fields['survey_iteration'] = Integer()
 df["survey_iteration"] = None
 
 # Write the DataFrame to the database table
