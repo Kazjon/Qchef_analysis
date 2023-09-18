@@ -54,4 +54,4 @@ fields['survey_iteration'] = Integer()
 df["survey_iteration"] = None
 
 # Write the DataFrame to the database table
-df.to_sql(table_name, con=engine, if_exists='replace', index=False, dtype=fields)
+df.to_sql(table_name, con=engine, if_exists='replace', index=True, dtype=fields)
