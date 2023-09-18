@@ -10,8 +10,47 @@ df = pd.read_csv(csv_file_path, header=0)
 
 engine = create_engine(f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 
+fields = { 
+          'timestamp': "TIMESTAMP", 
+          'User_ID': "varchar(64)",
+          'q1_bbd': "varchar(40)", 
+          'q2_grocery': "varchar(40)", 
+          'q3_buyvarveg': "varchar(40)", 
+          'q4_confbudggroc': "INT",
+          'q5_confmealplan': "INT", 
+          'q6_confselectveg': "INT", 
+          'q7_confreadlabel': "INT", 
+          'q8_planmealathome': "INT", 
+          'q9_confadjustrecipe': "INT", 
+          'q10_timesownbrekkie': "varchar(40)", 
+          'q11_timesownlunch': "varchar(40)", 
+          'q12_timesowndinner': "varchar(40)", 
+          'q13_oftenmealsbalanced': "varchar(40)", 
+          'q14_abilitytoprepare': "varchar(160)", 
+          'q15_confknives': "INT", 
+          'q16_confpeel': "INT", 
+          'q17_confvegprep': "INT", 
+          'q18_conflegume': "INT", 
+          'q19_confprepbasic': "INT", 
+          'q20_confrecipe': "INT", 
+          'q21_confboil': "INT", 
+          'q22_conffry': "INT",       
+          'q23_confbake': "INT", 
+          'q24_confspice': "INT", 
+          'q25_confnew': "INT"
+          }
+
 # Replace 'your_table_name' with the name of your database table
 table_name = 'FoodSkillsQuestionnaire_test'
 
+for c,d in zip(df.columns.tolist(),fields.keys()):
+    print(c+" --> "+d)
+    df.rename(columns={d:c},inplace=True)
+
+fields['FSQ_ID'] = "INT AUTO_INCREMENT PRIMARY KEY"
+df["FSQ_ID"] = None
+fields['survey_iteration'] = "INT"
+df["survey_iteration"] = None
+
 # Write the DataFrame to the database table
-df.to_sql(table_name, con=engine, if_exists='replace', index=False)
+df.to_sql(table_name, con=engine, if_exists='replace', index=False, dtype=fields)
