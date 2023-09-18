@@ -12,21 +12,21 @@ engine = create_engine(f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_p
 
 fields = { 
           'timestamp': "TIMESTAMP", 
-          'User_ID': "varchar(64)",
-          'q1_bbd': "varchar(40)", 
-          'q2_grocery': "varchar(40)", 
-          'q3_buyvarveg': "varchar(40)", 
+          'User_ID': "VARCHAR(64)",
+          'q1_bbd': "VARCHAR(40)", 
+          'q2_grocery': "VARCHAR(40)", 
+          'q3_buyvarveg': "VARCHAR(40)", 
           'q4_confbudggroc': "INT",
           'q5_confmealplan': "INT", 
           'q6_confselectveg': "INT", 
           'q7_confreadlabel': "INT", 
           'q8_planmealathome': "INT", 
           'q9_confadjustrecipe': "INT", 
-          'q10_timesownbrekkie': "varchar(40)", 
-          'q11_timesownlunch': "varchar(40)", 
-          'q12_timesowndinner': "varchar(40)", 
-          'q13_oftenmealsbalanced': "varchar(40)", 
-          'q14_abilitytoprepare': "varchar(160)", 
+          'q10_timesownbrekkie': "VARCHAR(40)", 
+          'q11_timesownlunch': "VARCHAR(40)", 
+          'q12_timesowndinner': "VARCHAR(40)", 
+          'q13_oftenmealsbalanced': "VARCHAR(40)", 
+          'q14_abilitytoprepare': "VARCHAR(160)", 
           'q15_confknives': "INT", 
           'q16_confpeel': "INT", 
           'q17_confvegprep': "INT", 
@@ -45,8 +45,8 @@ table_name = 'FoodSkillsQuestionnaire_test'
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
-    df.rename(columns={d:c},inplace=True)
-
+    df.rename(columns={c:d},inplace=True)
+print(df)
 fields['FSQ_ID'] = "INT AUTO_INCREMENT PRIMARY KEY"
 df["FSQ_ID"] = None
 fields['survey_iteration'] = "INT"
