@@ -1,6 +1,6 @@
 import pandas as pd
-from sqlalchemy import create_engine, String, Integer, DateTime
-from db_auth import *
+from sqlalchemy import  String, Integer, DateTime
+from db_auth import connecty_stuff
 
 # Define the path to your CSV file
 csv_file_path = 'data/fsq_export_modified.csv'
@@ -8,7 +8,7 @@ csv_file_path = 'data/fsq_export_modified.csv'
 # Use pandas to read the CSV file into a DataFrame
 df = pd.read_csv(csv_file_path, header=0)
 
-engine = create_engine(f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
+engine = connecty_stuff()
 
 fields = { 
           'timestamp': DateTime(), 
