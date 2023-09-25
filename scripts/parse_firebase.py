@@ -24,16 +24,17 @@ csv_dict = {row["\ufeffUID"]:row for row in csv_data}
 users_dict = {}
 #Extract the relevant user fields from data["__collections__"]["users"] and populate a pandas dataframe with them
 for uid,user_collection in data["__collections__"]["users"].items():
-    user_dict = {
-        "Name": csv_dict[uid]["Full Name"],
-        "Email": csv_dict[uid]["Account Email"],
-        "Email_Alias_1": csv_dict[uid]["Alias 1"],
-        "Email_Alias_2": csv_dict[uid]["Alias 2"],
-        "Experimental_Group": user_collection["group"],
-        "Served_Recipes": user_collection["servedRecipes"],
-        "Picked_Recipes": user_collection["pickedRecipes"],   
-    }
-    users_dict[uid] = user_dict
+    if uid in csc_dict.keys():
+        user_dict = {
+            "Name": csv_dict[uid]["Full Name"],
+            "Email": csv_dict[uid]["Account Email"],
+            "Email_Alias_1": csv_dict[uid]["Alias 1"],
+            "Email_Alias_2": csv_dict[uid]["Alias 2"],
+            "Experimental_Group": user_collection["group"],
+            "Served_Recipes": user_collection["servedRecipes"],
+            "Picked_Recipes": user_collection["pickedRecipes"],   
+        }
+        users_dict[uid] = user_dict
 
 #Define a dictionary with the field datatypes for the Users table
 user_fields = {
