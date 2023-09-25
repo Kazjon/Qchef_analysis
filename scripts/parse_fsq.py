@@ -1,3 +1,4 @@
+import csv
 import pandas as pd
 from sqlalchemy import  String, Integer, DateTime
 from db_auth import connecty_stuff
@@ -41,7 +42,28 @@ fields = {
           }
 
 # Replace 'your_table_name' with the name of your database table
-table_name = 'FoodSkillsQuestionnaire_test'
+table_name = 'FoodSkillsQuestionnaire'
+
+user_csv_data = []
+user_csv_file = "data/qchef_study2_participants_and_aliases.csv"
+#Open the CSV file and read the data
+with open(user_csv_file, mode='r', newline='') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        user_csv_data.append(row)
+
+user_csv_dict = {row["\ufeffUID"]:row for row in user_csv_data}
+email_lookup = {}
+for k,v in user_csv_dict.items():
+    email_lookup[v["Account Email"]] = k
+    if len(v["Alias 1"]):
+        email_lookup[v["Alias 1"]] = k
+    if len(v["Alias 2"]):
+        email_lookup[v["Alias 2"]] = k
+
+#Replace the emails in the above export with the actual user IDs
+for index,row in df.iterrows():
+    df.at[index,"User_ID"] = email_lookup(row["User_ID"])
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
