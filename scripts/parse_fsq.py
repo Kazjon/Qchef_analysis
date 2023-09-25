@@ -61,13 +61,19 @@ for k,v in user_csv_dict.items():
     if len(v["Alias 2"]):
         email_lookup[v["Alias 2"]] = k
 
-#Replace the emails in the above export with the actual user IDs
-for index,row in df.iterrows():
-    df.at[index,"User_ID"] = email_lookup(row["User_ID"])
+
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
     df.rename(columns={c:d},inplace=True)
+
+#Replace the emails in the above export with the actual user IDs
+for index,row in df.iterrows():
+    try:
+        df.at[index,"User_ID"] = email_lookup[row["User_ID"]]
+    except:
+        print("Failed to substitute email address " + row["User_ID"])
+
 print(df)
 fields['FSQ_ID'] = Integer()
 df["FSQ_ID"] = range(len(df))
