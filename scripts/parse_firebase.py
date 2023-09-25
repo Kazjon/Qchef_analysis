@@ -38,6 +38,7 @@ for uid,user_collection in data["__collections__"]["users"].items():
 
 #Define a dictionary with the field datatypes for the Users table
 user_fields = {
+        "User_ID": String(64),
         "Name": String(64),
         "Email": String(64),
         "Email_Alias_1": String(64),
@@ -51,6 +52,7 @@ engine = connecty_stuff()
 
 #Pandify 
 df = pd.DataFrame.from_dict(users_dict, orient="index")
+df.index.name = "User_ID"
 
 #Yeet the dataframe into the database
 df.to_sql("Users", con=engine, if_exists='replace', index=True, dtype=user_fields)
