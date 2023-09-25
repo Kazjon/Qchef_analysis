@@ -24,7 +24,7 @@ csv_dict = {row["\ufeffUID"]:row for row in csv_data}
 users_dict = {}
 #Extract the relevant user fields from data["__collections__"]["users"] and populate a pandas dataframe with them
 for uid,user_collection in data["__collections__"]["users"].items():
-    if uid in csc_dict.keys():
+    if uid in csv_dict.keys():
         user_dict = {
             "Name": csv_dict[uid]["Full Name"],
             "Email": csv_dict[uid]["Account Email"],
