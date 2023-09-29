@@ -62,7 +62,7 @@ for k,v in user_csv_dict.items():
     if len(v["Alias 2"]):
         email_lookup[v["Alias 2"]] = k
 
-
+num_surveys_dict = {k:0 for k in user_csv_dict.keys()}
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
@@ -70,10 +70,14 @@ for c,d in zip(df.columns.tolist(),fields.keys()):
 
 date_format = "%d/%m/%y %H:%M"
 
+df["survey_iteration"] = None
+
 #Replace the emails in the above export with the actual user IDs and then convert the datetime strings into objects
 for index,row in df.iterrows():
     try:
         df.at[index,"User_ID"] = email_lookup[row["User_ID"]]
+        df.at[index,"survey_iteration"] = num_surveys_dict[email_lookup[row["User_ID"]]]
+        num_surveys_dict[email_lookup[row["User_ID"]]] += 1
     except:
         print("Failed to substitute email address " + row["User_ID"])
     df.at[index,"timestamp"] = datetime.strptime(row["timestamp"],date_format)
@@ -83,7 +87,6 @@ fields['FSQ_ID'] = Integer()
 df["FSQ_ID"] = range(len(df))
 df.set_index("FSQ_ID", inplace=True)
 fields['survey_iteration'] = Integer()
-df["survey_iteration"] = None
 
 # Write the DataFrame to the database table
 df.to_sql(table_name, con=engine, if_exists='replace', index=True, dtype=fields)
