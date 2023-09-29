@@ -1,5 +1,6 @@
 import csv
 import pandas as pd
+from datetime import datetime
 from sqlalchemy import  String, Integer, DateTime
 from db_auth import connecty_stuff
 
@@ -67,14 +68,17 @@ for c,d in zip(df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
     df.rename(columns={c:d},inplace=True)
 
-#Replace the emails in the above export with the actual user IDs
+date_format = "%d/%m/%y %H:%M"
+
+#Replace the emails in the above export with the actual user IDs and then convert the datetime strings into objects
 for index,row in df.iterrows():
     try:
         df.at[index,"User_ID"] = email_lookup[row["User_ID"]]
     except:
         print("Failed to substitute email address " + row["User_ID"])
+    df.at[index,"timestamp"] = datetime.strptime(row["timestamp"],date_format)
 
-print(df)
+print(df["timestamp"])
 fields['FSQ_ID'] = Integer()
 df["FSQ_ID"] = range(len(df))
 df.set_index("FSQ_ID", inplace=True)
