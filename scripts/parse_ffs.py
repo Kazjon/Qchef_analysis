@@ -19,6 +19,7 @@ fields = {
           'a1_beercider': String(40), 
           'a2_spirits': String(40), 
           'a3_wine': String(40), 
+          'a4_otheralcohol': String(40), 
           'd1_milk': String(40), 
           'd2_butter': String(40),  
           'd3_cream': String(40), 
