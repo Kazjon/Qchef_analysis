@@ -129,11 +129,11 @@ with open(user_csv_file, mode='r', newline='') as file:
 user_csv_dict = {row["\ufeffUID"]:row for row in user_csv_data}
 email_lookup = {}
 for k,v in user_csv_dict.items():
-    email_lookup[v["Account Email"]] = k.lower()
+    email_lookup[v["Account Email"].lower()] = k
     if len(v["Alias 1"]):
-        email_lookup[v["Alias 1"]] = k.lower()
+        email_lookup[v["Alias 1"].lower()] = k
     if len(v["Alias 2"]):
-        email_lookup[v["Alias 2"]] = k.lower()
+        email_lookup[v["Alias 2"].lower()] = k
 
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
