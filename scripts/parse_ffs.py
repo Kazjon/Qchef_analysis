@@ -129,11 +129,11 @@ with open(user_csv_file, mode='r', newline='') as file:
 user_csv_dict = {row["\ufeffUID"]:row for row in user_csv_data}
 email_lookup = {}
 for k,v in user_csv_dict.items():
-    email_lookup[v["Account Email"]] = k
+    email_lookup[v["Account Email"]] = k.lower()
     if len(v["Alias 1"]):
-        email_lookup[v["Alias 1"]] = k
+        email_lookup[v["Alias 1"]] = k.lower()
     if len(v["Alias 2"]):
-        email_lookup[v["Alias 2"]] = k
+        email_lookup[v["Alias 2"]] = k.lower()
 
 
 for c,d in zip(df.columns.tolist(),fields.keys()):
@@ -145,7 +145,7 @@ date_format = "%m/%d/%Y %H:%M:%S"
 #Replace the emails in the above export with the actual user IDs and then convert the datetime strings into objects
 for index,row in df.iterrows():
     try:
-        df.at[index,"User_ID"] = email_lookup[row["User_ID"]]
+        df.at[index,"User_ID"] = email_lookup[row["User_ID"].lower()]
     except:
         print("Failed to substitute email address " + row["User_ID"])
     df.at[index,"timestamp"] = datetime.strptime(row["timestamp"],date_format)
