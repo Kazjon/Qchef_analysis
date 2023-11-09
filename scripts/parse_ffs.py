@@ -5,7 +5,7 @@ from sqlalchemy import  String, Integer, DateTime
 from db_auth import connecty_stuff
 
 # Define the path to your CSV file
-csv_file_path = 'data/ffs_export.csv'
+csv_file_path = 'data/ffs_export_modified.csv'
 
 # Use pandas to read the CSV file into a DataFrame
 df = pd.read_csv(csv_file_path, header=0)
