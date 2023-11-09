@@ -4,11 +4,20 @@ from datetime import datetime
 from sqlalchemy import  String, Integer, DateTime
 from db_auth import connecty_stuff
 
-# Define the path to your CSV file
+# Define the path to your CSV file  
+#Adding a separate CSV because the modified one we edited in Excel had its timestamps fucked with.  Thanks Excel.
 csv_file_path = 'data/ffs_export_modified.csv'
+
+# Define the path to your CSV file
+csv_file_path_dates = 'data/ffs_export.csv'
 
 # Use pandas to read the CSV file into a DataFrame
 df = pd.read_csv(csv_file_path, header=0)
+
+# Use pandas to read the CSV file into a DataFrame
+dates_df = pd.read_csv(csv_file_path_dates, header=0)
+
+df['Timestamp'] = dates_df["Timestamp"]
 
 engine = connecty_stuff()
 
