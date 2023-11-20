@@ -53,3 +53,9 @@ df.set_index("RCQ_ID", inplace=True)
 
 # Write the DataFrame to the database table
 df.to_sql(table_name, con=engine, if_exists='replace', index=True, dtype=fields)
+
+#After running this on the ever-lovely PhPMyAdmin, we used the following query to get it all back out again:
+
+# SELECT 
+#   `RecipeCuriosityQuestionnaire`.`RCQ_ID`, `RecipeCuriosityQuestionnaire`.`timestamp`, `RecipeCuriosityQuestionnaire`.`User_ID`, `RecipeCuriosityQuestionnaire`.`Recipe_ID`, `RecipeCuriosityQuestionnaire`.`q1_wantknowtaste`, `RecipeCuriosityQuestionnaire`.`q2_fascinating`, `RecipeCuriosityQuestionnaire`.`q3_trymore`, `RecipeCuriosityQuestionnaire`.`q4_learnmore`, `RecipeCuriosityQuestionnaire`.`q5_notcurious`, `Users`.`Experimental_Group`
+# FROM `RecipeCuriosityQuestionnaire` JOIN `Users` ON `RecipeCuriosityQuestionnaire`.`User_ID` = `Users`.`User_ID` WHERE 1
