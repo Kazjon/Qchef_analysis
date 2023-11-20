@@ -32,14 +32,13 @@ fields = {
 # Replace 'your_table_name' with the name of your database table
 table_name = 'RecipeCuriosityQuestionnaire'
 
-df = pd.DataFrame(columns=fields.keys())
+df = pd.DataFrame()
 
 for c,d in zip(raw_df.columns.tolist(),fields.keys()):
     print(c+" --> "+d)
-    df.rename(columns={c:d},inplace=True)
+    if not d[0] == "_":
+        df[d] = raw_df[c]
 
-#Drop the colums tha start with _
-df.drop([key for key in fields.keys() if key[0] == "_"],axis=1,inplace=True)
 
 date_format = "%m/%d/%Y %H:%M:%S"
 
@@ -47,7 +46,7 @@ date_format = "%m/%d/%Y %H:%M:%S"
 for index,row in df.iterrows():
     df.at[index,"timestamp"] = datetime.strptime(row["timestamp"],date_format)
 
-print(df["timestamp"])
+print(df)
 fields['RCQ_ID'] = Integer()
 df["RCQ_ID"] = range(len(df))
 df.set_index("RCQ_ID", inplace=True)
