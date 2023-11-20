@@ -39,7 +39,7 @@ for c,d in zip(raw_df.columns.tolist(),fields.keys()):
     df.rename(columns={c:d},inplace=True)
 
 #Drop the colums tha start with _
-df.drop([key for key in df.columns.keys() if key[0] == "_"],axis=1,inplace=True)
+df.drop([key for key in fields.keys() if key[0] == "_"],axis=1,inplace=True)
 
 date_format = "%m/%d/%Y %H:%M:%S"
 
