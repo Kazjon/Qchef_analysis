@@ -5,7 +5,7 @@ from sqlalchemy import  String, Integer, DateTime
 from db_auth import connecty_stuff
 
 # Define the path to your CSV file
-csv_file_path = 'data/qchef-reviews'
+csv_file_path = 'data/qchef-reviews.csv'
 
 # Use pandas to read the CSV file into a DataFrame
 raw_df = pd.read_csv(csv_file_path, header=0)
